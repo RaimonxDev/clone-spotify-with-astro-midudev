@@ -3,7 +3,7 @@ export default {
   plugins: ['prettier-plugin-astro'],
   overrides: [
     {
-      files: '*.astro',
+      files: '*.astro, *.jsx, *.js, *.ts, *.tsx',
       options: {
         parser: 'astro',
       },

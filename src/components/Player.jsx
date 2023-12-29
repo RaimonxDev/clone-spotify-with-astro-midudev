@@ -1,3 +1,4 @@
+import { usePlayerStore } from "@/store/playerStore";
 import { useState, useRef, useEffect } from "react";
 
 export const Pause = ({ className }) => (
@@ -58,23 +59,26 @@ export const Volume = () => (
 );
 
 export const Player = () => {
-  useEffect(() => {
-    audioRef.current.src =
-      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-  }, []);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const [currentSong, setCurrentSong] = useState(null);
   const audioRef = useRef();
 
-  const handleClick = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
+  const { isPlaying, setIsPlaying, currentMusic } = usePlayerStore(
+    (state) => state,
+  );
 
+  useEffect(() => {
+    isPlaying ? audioRef.current.play() : audioRef.current.pause();
+  }, [isPlaying]);
+
+  useEffect(() => {
+    const { song, playlist, songs } = currentMusic;
+    if (song) {
+      audioRef.current.src = `/music/${playlist?.id}/0${song.id}.mp3`;
+      audioRef.current.play();
+      return;
+    }
+  }, [currentMusic]);
+
+  const handleClick = () => {
     setIsPlaying(!isPlaying);
   };
 
