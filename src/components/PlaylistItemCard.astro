@@ -1,5 +1,6 @@
 ---
 import type { Playlist } from '@/lib/data';
+import { CardPlayButton } from './CardPlayButton';
 interface Props {
   playlist: Playlist
 }
@@ -9,6 +10,10 @@ const artistString = artists.join(", ");
 ---
 <!-- Para la transition name tiene que hacer match con el elemeto de la otra pagina -->
 <!-- En este caso con la page [id].astro. Nota tiene que ser al elemento a animar-->
+<article class="relative group ">
+  <div class="absolute right-4 bottom-20 translate-y-4 transition-all duration-500 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+    <CardPlayButton id={id} />
+  </div>
 <a
   href={`/playlist/${id}`}
   class="playlist-item flex flex-col relative p-2 pb-6 overflow-hidden items-start gap-2 rounded-md hover:bg-zinc-800 transition-all duration-100 shadow-lg hover:shadow-xl bg-zinc-500/30 w-44"
@@ -41,4 +46,5 @@ const artistString = artists.join(", ");
 
 
 </a>
+</article>
 
